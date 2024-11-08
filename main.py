@@ -1,12 +1,11 @@
-from qiskit import Aer, QuantumCircuit, execute
-import numpy as np
+from qiskit import QuantumCircuit, Aer, execute
 from sympy import isprime
 
 
-# Function to generate an 8-qubit random number
-def generate_random_8qubit_number():
+# Function to generate an 8-bit random number using quantum simulation
+def generate_random_8bit_number():
     qc = QuantumCircuit(8)
-    qc.h(range(8))  # Apply Hadamard gate to each qubit to create superposition
+    qc.h(range(8))  # Apply Hadamard gate to each qubit
     qc.measure_all()  # Measure all qubits
 
     simulator = Aer.get_backend('qasm_simulator')
@@ -23,7 +22,7 @@ def main():
     numbers_list = []
 
     for _ in range(N):
-        number = generate_random_8qubit_number()
+        number = generate_random_8bit_number()
         numbers_list.append(number)
 
     # Count prime numbers in the list
@@ -36,5 +35,4 @@ def main():
     print("Ratio of prime numbers:", prime_ratio)
 
 
-if __name__ == "__main__":
-    main()
+main()
