@@ -1,22 +1,20 @@
 from qiskit import QuantumCircuit, Aer, execute
 from sympy import isprime
 
-
-# Function to generate an 8-bit random number using quantum simulation
+#Main quantum function creating the true random numbers
 def generate_random_8bit_number():
     qc = QuantumCircuit(8)
-    qc.h(range(8))  # Apply Hadamard gate to each qubit
-    qc.measure_all()  # Measure all qubits
+    qc.h(range(8)) #applying hadamard gate so its 50-50 chance to be 0 or 1
+    qc.measure_all() #measure so it collapse to a value
 
     simulator = Aer.get_backend('qasm_simulator')
     job = execute(qc, simulator, shots=1)
     result = job.result()
     counts = result.get_counts()
-    binary_number = list(counts.keys())[0]  # Get the binary result as a string
-    return int(binary_number, 2)  # Convert binary to decimal
+    binary_number = list(counts.keys())[0]
+    return int(binary_number, 2) #returning values as decimals
 
 
-# Main program
 def main():
     N = int(input("Enter the number of iterations (N): "))
     numbers_list = []
@@ -25,7 +23,6 @@ def main():
         number = generate_random_8bit_number()
         numbers_list.append(number)
 
-    # Count prime numbers in the list
     prime_count = sum(1 for number in numbers_list if isprime(number))
     prime_ratio = prime_count / N
 
